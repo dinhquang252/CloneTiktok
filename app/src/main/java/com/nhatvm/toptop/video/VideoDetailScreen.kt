@@ -8,12 +8,15 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
 import com.nhatvm.toptop.designsystem.TopTopVideoPlayer
+import com.nhatvm.toptop.video.composables.SideBarView
+import com.nhatvm.toptop.video.composables.VideoInfoArea
 
 /**
  * @author quangtran
@@ -23,7 +26,7 @@ import com.nhatvm.toptop.designsystem.TopTopVideoPlayer
 @Composable
 fun VideoDetailScreen(
     videoId: Int,
-    viewModel: VideoDetailViewModel = hiltViewModel()
+    viewModel: VideoDetailViewModel
 ) {
     val uiState = viewModel.uiState.collectAsState()
     if (uiState.value == VideoDetailUIState.Default) {
@@ -62,7 +65,7 @@ fun VideoDetailScreen(
 @Composable
 fun VideoDetailUIScreen(player: Player) {
     ConstraintLayout(modifier = Modifier.fillMaxSize()) {
-        val (videoPlayerView, sideBar) = createRefs()
+        val (videoPlayerView, sideBar,videoInfo) = createRefs()
         TopTopVideoPlayer(player = player, modifier = Modifier.constrainAs(videoPlayerView) {
             top.linkTo(parent.top)
             bottom.linkTo(parent.bottom)
@@ -71,5 +74,29 @@ fun VideoDetailUIScreen(player: Player) {
             width = Dimension.matchParent
             height = Dimension.matchParent
         })
+
+        SideBarView(onAvatarClick = {},
+            onChatClick = {},
+            onLikeClick = {},
+            onSaveClick = {},
+            onShareClick = {},
+            modifier = Modifier.constrainAs(sideBar){
+                end.linkTo(parent.end, margin = 16.dp)
+                bottom.linkTo(parent.bottom, margin = 16.dp)
+            }
+        )
+
+        VideoInfoArea(
+            accountName = "Qiang",
+            videoName = "Clone Tiktok",
+            hashTag = listOf("jetpack", "android", "tiktok"),
+            songName = "let go",
+            modifier = Modifier.constrainAs(videoInfo){
+                start.linkTo(parent.start,margin = 16.dp)
+                bottom.linkTo(sideBar.bottom)
+                end.linkTo(sideBar.start)
+                width = Dimension.fillToConstraints
+            }
+        )
     }
 }

@@ -11,8 +11,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.media3.common.util.UnstableApi
+import com.nhatvm.toptop.following.FollowingScreen
+import com.nhatvm.toptop.foryou.ListForUVideoScreen
 import com.nhatvm.toptop.ui.theme.ToptopTheme
-import com.nhatvm.toptop.video.VideoDetailScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @UnstableApi
@@ -27,7 +28,8 @@ class MainActivity: ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                 VideoDetailScreen(videoId = 1)
+//                    ListForUVideoScreen()
+                    FollowingScreen()
                 }
             }
         }
